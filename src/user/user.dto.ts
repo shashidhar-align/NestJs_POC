@@ -16,3 +16,17 @@ export class CreateUserDTO {
   @ApiProperty({ required: false })
   phone: string;
 }
+
+export class UpdateUserDTO {
+  @IsString()
+  @ApiProperty({ required: true, default: 'string@domain.com' })
+  email: string;
+
+  @IsString()
+  @ApiProperty({ required: true, default: 'full name' })
+  name: string;
+
+  @IsString()
+  @ApiProperty({ required: false })
+  phone: string;
+}
