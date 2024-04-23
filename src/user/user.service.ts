@@ -1,6 +1,15 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
-import { DatabaseService } from 'src/database/database.service';
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { Prisma, PrismaClient } from "@prisma/client";
+import { DatabaseService } from "src/database/database.service";
+
+const prisma = new PrismaClient({
+  log: [
+    {
+      emit: "event",
+      level: "query",
+    },
+  ],
+});
 
 @Injectable()
 export class UserService {
@@ -11,10 +20,20 @@ export class UserService {
   }
 
   async findAll() {
-    return await this.databaseService.user.findMany();
+    return await this.databaseService.user.findMany({
+      include: {
+        Task: {
+          where: {
+            AND: [{ title: "" }],
+          },
+        },
+      },
+    });
   }
 
   async findOne(id: number) {
+    // let userTable = 'User'
+    // let result = await prisma.$queryRawUnsafe(`SELECT * FROM ${userTable}`); // Raw query example
     const user = await this.databaseService.user.findFirst({
       where: { id: id },
     });
