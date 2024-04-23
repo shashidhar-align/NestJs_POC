@@ -36,11 +36,7 @@ export class UserController {
 
   @Delete(':id')
   async remove(req: Request, res: Response, @Param('id') id: string) {
-    try {
-      const deleteUser = await this.userService.remove(+id);
-      return deleteUser;
-    } catch (e) {
-      return res.json();
-    }
+    const deleteUser = await this.userService.remove(+id);
+    return deleteUser;
   }
 }
