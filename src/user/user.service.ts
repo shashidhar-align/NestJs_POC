@@ -3,14 +3,16 @@ import { Prisma, PrismaClient } from "@prisma/client";
 import { DatabaseService } from "src/database/database.service";
 import { CreateUserDTO, UpdateUserDTO } from "./user.dto";
 
-const prisma = new PrismaClient({
-  log: [
-    {
-      emit: "event",
-      level: "query",
-    },
-  ],
-});
+// TODO - Write raw queries using below variable 
+
+// const prisma = new PrismaClient({
+//   log: [
+//     {
+//       emit: "event",
+//       level: "query",
+//     },
+//   ],
+// });
 
 @Injectable()
 export class UserService {
