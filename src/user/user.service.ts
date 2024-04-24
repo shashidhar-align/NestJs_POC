@@ -35,6 +35,9 @@ export class UserService {
     // let result = await prisma.$queryRawUnsafe(`SELECT * FROM ${userTable}`); // Raw query example
     const user = await this.databaseService.user.findFirst({
       where: { id: id },
+      include: {
+        Task: true
+      }
     });
     if (!user) {
       throw new NotFoundException(`User with ${id} does not exist.`);
@@ -46,6 +49,9 @@ export class UserService {
     return await this.databaseService.user.update({
       where: { id },
       data: updateUserDto,
+      include: {
+        Task:true
+      }
     });
   }
 

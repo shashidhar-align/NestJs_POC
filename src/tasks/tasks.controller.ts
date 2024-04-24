@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { Prisma } from '@prisma/client';
 import { ApiTags, ApiBody } from '@nestjs/swagger';
@@ -10,7 +18,7 @@ export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
   @Post()
-  @ApiBody({ type:  CreateTaskDTO})
+  @ApiBody({ type: CreateTaskDTO })
   create(@Body() createTaskDto: Prisma.TaskCreateInput) {
     return this.tasksService.create(createTaskDto);
   }
@@ -26,8 +34,11 @@ export class TasksController {
   }
 
   @Patch(':id')
-  @ApiBody({ type:  CreateTaskDTO})
-  update(@Param('id') id: string, @Body() updateTaskDto: Prisma.TaskUpdateInput) {
+  @ApiBody({ type: CreateTaskDTO })
+  update(
+    @Param('id') id: string,
+    @Body() updateTaskDto: Prisma.TaskUpdateInput
+  ) {
     return this.tasksService.update(+id, updateTaskDto);
   }
 
