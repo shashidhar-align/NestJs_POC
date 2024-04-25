@@ -29,8 +29,8 @@ export class TasksController {
   @ApiBody({ type: CreateTaskDTO })
   async create(@Body() createTaskDto: Prisma.TaskCreateInput) {
     try {
-      const user = await this.tasksService.create(createTaskDto);
-      return user;
+      const task = await this.tasksService.create(createTaskDto);
+      return task;
     } catch (error) {
       console.log(JSON.stringify(error));
       // throw new InternalServerErrorException(error.name);

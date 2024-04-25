@@ -18,7 +18,7 @@ export class AuthService {
     console.log(email, password);
     // Step 1: Fetch a user with the given email
     const user = await this.databaseService.user.findUnique({
-      where: { email: email },
+      where: { email: email }
     });
 
     // If no user is found, throw an error
@@ -33,6 +33,8 @@ export class AuthService {
     if (!isPasswordValid) {
       throw new UnauthorizedException("Invalid password");
     }
+
+    delete user.password
 
     // Step 3: Generate a JWT containing the user's ID and return it
     return {
