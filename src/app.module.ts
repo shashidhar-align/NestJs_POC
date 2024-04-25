@@ -3,7 +3,9 @@ import { TestModule } from "./test/test.module";
 import { DatabaseModule } from "./database/database.module";
 import { UserModule } from "./user/user.module";
 // import { AdminModule } from '@adminjs/nestjs';
-import { TasksModule } from './tasks/tasks.module';
+import { TasksModule } from "./tasks/tasks.module";
+import { APP_FILTER } from "@nestjs/core";
+import { HttpExceptionFilter } from "./http-exception.filter";
 
 // TODO: Adminjs configuration
 
@@ -13,7 +15,7 @@ import { TasksModule } from './tasks/tasks.module';
 // };
 
 // const authenticate = async (email: string, password: string) => {
-//   if (email === DEFAULT_ADMIN.email && password === DEFAULT_ADMIN.password) { 
+//   if (email === DEFAULT_ADMIN.email && password === DEFAULT_ADMIN.password) {
 //     return Promise.resolve(DEFAULT_ADMIN);
 //   }
 //   return null;
@@ -45,9 +47,14 @@ import { TasksModule } from './tasks/tasks.module';
     // ),
     TestModule,
     UserModule,
-    TasksModule
+    TasksModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: APP_FILTER,
+      useClass: HttpExceptionFilter,
+    },
+  ],
 })
 export class AppModule {}

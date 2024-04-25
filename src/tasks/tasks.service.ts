@@ -15,7 +15,7 @@ export class TasksService {
       throw new NotFoundException(`User with ${userId} does not exist.`);
     return this.databaseService.task.create({
       data: {
-        title: createTaskDto.title,
+        ...createTaskDto,
         user: {
           connect: {
             id: userId,
