@@ -2,7 +2,9 @@ import { Injectable, NotFoundException } from "@nestjs/common";
 import { Prisma, PrismaClient } from "@prisma/client";
 import { DatabaseService } from "src/database/database.service";
 import { CreateUserDTO, UpdateUserDTO } from "./user.dto";
+import * as bcrypt from 'bcrypt';
 
+export const roundsOfHashing = 10;
 // TODO - Write raw queries using below variable 
 
 // const prisma = new PrismaClient({
@@ -19,6 +21,12 @@ export class UserService {
   constructor(private readonly databaseService: DatabaseService) {}
 
   async create(createUserDto: CreateUserDTO) {
+    const hashedPassword = await bcrypt.hash(
+      createUserDto.password,
+      roundsOfHashing,
+    );
+
+    createUserDto.password = hashedPassword;
     return await this.databaseService.user.create({ data: createUserDto });
   }
 

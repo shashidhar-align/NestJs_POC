@@ -7,20 +7,20 @@ import {
   Param,
   Delete,
   UseFilters,
-  Res,
   HttpStatus,
   HttpException,
-  InternalServerErrorException,
+  UseGuards,
 } from "@nestjs/common";
 import { TasksService } from "./tasks.service";
 import { Prisma } from "@prisma/client";
 import { ApiTags, ApiBody } from "@nestjs/swagger";
 import { CreateTaskDTO } from "./tasks.dto";
-import { FastifyReply } from "fastify";
 import { HttpExceptionFilter } from "src/http-exception.filter";
+import { JwtAuthGuard } from "src/auth/jwt-auth.guard";
 
 @ApiTags("Tasks")
 @Controller("api/task")
+@UseGuards(JwtAuthGuard)
 @UseFilters(HttpExceptionFilter)
 export class TasksController {
   constructor(private readonly tasksService: TasksService) {}

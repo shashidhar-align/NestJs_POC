@@ -12,6 +12,10 @@ export class CreateUserDTO {
   name: string;
 
   @IsString()
+  @ApiProperty({ required: true, default: 'enter password' })
+  password: string;
+
+  @IsString()
   @IsNotEmpty()
   @ApiProperty({ required: false })
   phone: string;
